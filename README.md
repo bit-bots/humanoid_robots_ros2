@@ -29,6 +29,8 @@ How to create a new robot based on a proto file (documentation WIP)
 11. Change all HingeJointsWithBacklash to HingeJoints (the proto might already have a variable for this, otherwise use find/replace).
 12. Open the world file again in webots to check if your model is still working. Fix any issues.
 13. Source your ROS2 workspace in a terminal (`source SOME_PATH/ROS2_WORKSAPCE/install/setup.bash`)
+
+TODO the following step is a very hacky solution. Webots should also be able to create this via `webots convert -t URDF ROBOT_NAME.proto -o robot.urdf` 
 14. Edit the `webots_robot_controller.py` in `wolfgang_webots_sim` and uncomment the lines (or add them if missing in `__init__()`)
     ``` 
     with open("urdf_export.xml", "w+") as f:

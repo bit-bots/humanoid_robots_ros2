@@ -1,0 +1,1748 @@
+#VRML_SIM R2021b utf8
+PROTO RFCRobot2016Core [
+    field SFVec3f    translation      0 0 0
+    field SFRotation rotation         0 0 1 0
+    field SFString   name             "red player 1"
+    field SFBool     selfCollision    TRUE
+    field MFString   controllerArgs   ["10001", "1", "127.0.0.1"]
+    field SFString   controller       "player"
+    field SFString   customData       ""
+    field  SFBool      supervisor      FALSE          # Is `Robot.supervisor`.
+]
+{
+
+    %{
+      team_color="1. 0. 1."
+      team_jersey="RFCRobot2016/textures/red01.jpg"
+      if fields.name.value ~= '' then
+        -- name is supposed to be something like "red player 2" or "blue player 1"
+        local words = {}
+        for word in fields.name.value:gmatch("%w+") do table.insert(words, word) end
+        color = words[1]
+        robotid = words[3]
+        if color == "red" then
+          team_color="1. 0. 0."
+        elseif color == "blue" then
+          team_color="0. 0. 1."
+        end
+        if color == "red" and robotid == "1" then
+            team_jersey="RFCRobot2016/textures/red01.jpg"
+        elseif color == "red" and  robotid == "2" then
+            team_jersey="RFCRobot2016/textures/red02.jpg"
+        elseif color == "red" and  robotid == "3" then
+            team_jersey="RFCRobot2016/textures/red03.jpg"
+        elseif color == "red" and  robotid == "4" then
+            team_jersey="RFCRobot2016/textures/red04.jpg"
+        elseif color == "blue" and  robotid == "1" then
+            team_jersey="RFCRobot2016/textures/blue01.jpg"
+        elseif color == "blue" and  robotid == "2" then
+            team_jersey="RFCRobot2016/textures/blue02.jpg"
+        elseif color == "blue" and  robotid == "3" then
+            team_jersey="RFCRobot2016/textures/blue03.jpg"
+        elseif color == "blue" and  robotid == "4" then
+            team_jersey="RFCRobot2016/textures/blue04.jpg"
+        end
+      end
+    }%
+    # root
+Robot {
+    translation IS translation
+    rotation IS rotation
+    selfCollision IS selfCollision
+    customData IS customData
+    name IS name
+    controller IS controller
+    controllerArgs IS controllerArgs
+    supervisor IS supervisor
+    # Fake physics node, real node is in node "torso"
+    physics Physics {
+        density -1
+        mass 0.001
+        centerOfMass [ 0 0 0 ]
+        inertiaMatrix [ 0.001 0.001 0.001 0 0 0 ]
+    }
+    children [
+        Solid {
+            physics Physics {
+                density -1
+                mass 2.1499427556991577
+                centerOfMass [ -0.034269 0.000134 0.091558 ]
+                inertiaMatrix [ 0.0060859788209199905 0.0044529433362185955 0.004130957182496786 1.566585160617251e-05 0.00014397234190255404 1.350527156773751e-07]
+            }
+            boundingObject Group {
+                children [
+                    Transform {
+                        translation -0.030906336382031455 5.677401888543931e-18 0.0893306895159185
+                        children [
+                            Box {
+                                size 0.1077000014483929 0.18019999563694003 0.19734659511595964
+
+                            }
+                        ]
+                    }
+                ]
+            }
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor %{=team_color}%
+                            ambientIntensity .4
+                        }
+                    texture ImageTexture{url "%{=team_jersey}%"}
+                    textureTransform TextureTransform {scale 1 -1}
+                    }
+                    geometry Mesh {
+                        url "RFCRobot2016/geometries/Torso.obj"
+                    }
+                }
+                # root2HeadYaw
+                Transform {
+                    translation -0.032156 0.000000 0.18215
+                    children [
+                        # mx28, 14.8V
+                        HingeJointWithBacklash{
+                            jointParameters HingeJointParameters {
+                                axis -0.000000 0.000000 1.000000
+                                dampingConstant 0.31
+                                staticFriction 1.03
+                            }
+                            device [
+                                RotationalMotor {
+                                    name "HeadYaw"
+                                    minPosition -1.5
+                                    maxPosition 1.5
+                                    maxTorque 3.1
+                                    maxVelocity 7.02
+                                }
+                                PositionSensor {
+                                    name "HeadYaw_sensor"
+                                    resolution 0.0015
+                                }
+                            ]
+                            endPoint Solid {
+                                physics Physics {
+                                    density -1
+                                    mass 0.045782651752233505
+                                    centerOfMass [ 0.0110  -0.0003   0.0200 ]
+                                    inertiaMatrix [ 8.646311518371701e-06 1.1295745782736195e-05 1.3148196168798997e-05 -1.0496984525663393e-05 9.847402305351717e-06 1.064024335573502e-08]
+                                }
+                                boundingObject Group {
+                                    children [
+                                        Transform {
+                                            translation 0.013300000689923763 -0.0032999999821186083 0.01924999989569197
+                                            children [
+                                                Box {
+                                                    size 0.05060000158846378 0.04509999975562096 0.03849999979138355
+
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                name "HeadYaw"
+                                children [
+                                    Shape {
+                                        appearance Appearance {
+                                            material Material {
+                                                diffuseColor 0.0 0.0 0.0
+                                                ambientIntensity .4
+                                            }
+                                        }
+                                        geometry Mesh {
+                                            url "RFCRobot2016/geometries/HeadYaw.STL"
+                                        }
+                                    }
+                                    # HeadYaw2HeadYaw_body
+                                    Transform {
+                                        translation 0.000000 0.000000 0.000000
+                                        children [
+                                            Solid {
+                                            }
+                                        ]
+                                    }
+                                    # HeadYaw2HeadPitch
+                                    Transform {
+                                        translation 0.000000 -0.000522 0.020700
+                                        children [
+                                            # mx28, 14.8V
+                                            HingeJointWithBacklash{
+                                                jointParameters HingeJointParameters {
+                                                    axis 0.000000 1.000000 0.000000
+                                                    dampingConstant 0.31
+                                                    staticFriction 1.03
+                                                }
+                                                device [
+                                                    RotationalMotor {
+                                                        name "HeadPitch"
+                                                        minPosition -1.4
+                                                        maxPosition 1.4
+                                                        maxTorque 3.1
+                                                        maxVelocity 7.02
+                                                    }
+                                                    PositionSensor {
+                                                        name "HeadPitch_sensor"
+                                                        resolution 0.0015
+                                                    }
+                                                ]
+                                                endPoint Solid {
+                                                    physics Physics {
+                                                        density -1
+                                                        mass 0.05892692133784294
+                                                        centerOfMass [ 0.0327   0.0006   0.0533 ]
+                                                        inertiaMatrix [ 4.7001969493192344e-05 5.030344472020906e-05 4.473106815772885e-05 -0.00011149737907965638 0.00010152948765910401 -1.0736823125132683e-07]
+                                                    }
+                                                    boundingObject Group {
+                                                        children [
+                                                            Transform {
+                                                                translation 0.031023521863655815 0.0005238130688667329 0.032907420953046815
+                                                                children [
+                                                                    Box {
+                                                                        size 0.11095440550664204 0.06842392683029176 0.12628667569462354
+
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                    name "HeadPitch"
+                                                    children [
+                                                        Shape {
+                                                            appearance Appearance {
+                                                                material Material {
+                                                                    diffuseColor 0.0 0.0 0.0
+                                                                    ambientIntensity .4
+                                                                }
+                                                            }
+                                                            geometry Mesh {
+                                                                url "RFCRobot2016/geometries/HeadPitch.STL"
+                                                            }
+                                                        }
+                                                        # HeadPitch2HeadPitch_body
+                                                        Transform {
+                                                            translation 0.000000 0.000000 0.000000
+                                                            children [
+                                                                Solid {
+                                                                    children [
+                                                                        # HeadPitch_body2camera
+                                                                        Transform {
+                                                                            translation 0.026000 0.000000 0.094000
+                                                                            children [
+                                                                                Solid {
+                                                                                    children [
+                                                                                        Transform {
+                                                                                            rotation 0 0 1 -1.5708
+                                                                                            children [
+                                                                                                Camera {
+                                                                                                    rotation 1 0 0 1.5708
+                                                                                                    name "Camera"
+                                                                                                    fieldOfView 1.229
+                                                                                                    width 640
+                                                                                                    height 480
+                                                                                                    zoom Zoom {
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+                # root2LeftHipYaw
+                Transform {
+                    translation -0.034656 0.057500 0.018069
+                    children [
+                        # mx64, 14.8V
+                        HingeJointWithBacklash{
+                            jointParameters HingeJointParameters {
+                                axis -0.000000 0.000000 -1.000000
+                                dampingConstant 0.65
+                                staticFriction 1.73
+                            }
+                            device [
+                                RotationalMotor {
+                                    name "LeftHipYaw"
+                                    minPosition -1.5708
+                                    maxPosition 1.5708
+                                    maxTorque 7.3
+                                    maxVelocity 8.17
+                                }
+                                PositionSensor {
+                                    name "LeftHipYaw_sensor"
+                                    resolution 0.0015
+                                }
+                            ]
+                            endPoint Solid {
+                                physics Physics {
+                                    density -1
+                                    mass 0.0339411161839962
+                                    centerOfMass [ -1.8393e-02   1.6903e-10  -3.0957e-02 ]
+                                    inertiaMatrix [ 7.267730874333741e-06 4.7570116727734975e-05 4.871226327385082e-05 -1.8793923750327388e-05 1.932530119962844e-05 6.897787811839299e-14]
+                                }
+                                boundingObject Group {
+                                    children [
+                                        Transform {
+                                            translation -0.017708400264382362 0.0 -0.042911346070468426
+                                            children [
+                                                Box {
+                                                    size 0.10000000521540642 0.03547320142388344 0.04000000096857548
+
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                name "LeftHipYaw"
+                                children [
+                                    Shape {
+                                        appearance Appearance {
+                                            material Material {
+                                                diffuseColor 0.0 0.0 0.0
+                                                ambientIntensity .4
+                                            }
+                                        }
+                                        geometry Mesh {
+                                            url "RFCRobot2016/geometries/LeftHipYaw.STL"
+                                        }
+                                    }
+                                    # LeftHipYaw2LeftHipYaw_body
+                                    Transform {
+                                        translation 0.000000 0.000000 0.000000
+                                        children [
+                                            Solid {
+                                            }
+                                        ]
+                                    }
+                                    # LeftHipYaw2LeftHipRoll
+                                    Transform {
+                                        translation -0.042797 0.000000 -0.060211
+                                        children [
+                                            # mx106, 14.8V
+                                            HingeJointWithBacklash{
+                                                jointParameters HingeJointParameters {
+                                                    axis 1.000000 0.000000 0.000000
+                                                    dampingConstant 1.23
+                                                    staticFriction 2.55
+                                                }
+                                                device [
+                                                    RotationalMotor {
+                                                        name "LeftHipRoll [hip]"
+                                                        minPosition -2.0944
+                                                        maxPosition 1
+                                                        maxTorque 10.0
+                                                        maxVelocity 5.76
+                                                    }
+                                                    PositionSensor {
+                                                        name "LeftHipRoll [hip]_sensor"
+                                                        resolution 0.0015
+                                                    }
+                                                ]
+                                                endPoint Solid {
+                                                    physics Physics {
+                                                        density -1
+                                                        mass 0.18309427797794342
+                                                        centerOfMass [ 0.0238   0.0002  -0.0147 ]
+                                                        inertiaMatrix [ 7.683568055096104e-05 0.00015873264507405507 0.00013516651291718527 6.459313552773335e-05 -6.597811739057604e-05 -1.057989978692873e-06]
+                                                    }
+                                                    boundingObject Group {
+                                                        children [
+                                                            Transform {
+                                                                translation 0.022588652558624744 0.0031500002369284673 -0.018050000071525574
+                                                                children [
+                                                                    Box {
+                                                                        size 0.09999999962747097 0.05529999919235708 0.06509999930858612
+
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                    name "LeftHipRoll"
+                                                    children [
+                                                        Shape {
+                                                            appearance Appearance {
+                                                                material Material {
+                                                                    diffuseColor 0.0 0.0 0.0
+                                                                    ambientIntensity .4
+                                                                }
+                                                            }
+                                                            geometry Mesh {
+                                                                url "RFCRobot2016/geometries/LeftHipRoll.STL"
+                                                            }
+                                                        }
+                                                        # LeftHipRoll2LeftHipRoll_body
+                                                        Transform {
+                                                            translation 0.000000 0.000000 0.000000
+                                                            children [
+                                                                Solid {
+                                                                }
+                                                            ]
+                                                        }
+                                                        # LeftHipRoll2LeftHipPitch
+                                                        Transform {
+                                                            translation 0.042489 0.000670 0.000000
+                                                            children [
+                                                                # mx106, 14.8V
+                                                                HingeJointWithBacklash{
+                                                                    jointParameters HingeJointParameters {
+                                                                        axis 0.000000 1.000000 -0.000000
+                                                                        dampingConstant 1.23
+                                                                        staticFriction 2.55
+                                                                    }
+                                                                    device [
+                                                                        RotationalMotor {
+                                                                            name "LeftHipPitch"
+                                                                            minPosition -2.0944
+                                                                            maxPosition 2.0944
+                                                                            maxTorque 10.0
+                                                                            maxVelocity 5.76
+                                                                        }
+                                                                        PositionSensor {
+                                                                            name "LeftHipPitch_sensor"
+                                                                            resolution 0.0015
+                                                                        }
+                                                                    ]
+                                                                    endPoint Solid {
+                                                                        physics Physics {
+                                                                            density -1
+                                                                            mass 0.1560063362121582
+                                                                            centerOfMass [ -0.0005  -0.0007  -0.1374 ]
+                                                                            inertiaMatrix [ 0.00032125978541540715 0.0002970898396070995 5.930513977255061e-05 -1.78090213779247e-05 1.0068949037320458e-05 9.12007031230333e-06]
+                                                                        }
+                                                                        boundingObject Group {
+                                                                            children [
+                                                                                Transform {
+                                                                                    translation -0.0007417051254596523 -0.0003116428183693902 -0.08673009872817726
+                                                                                    children [
+                                                                                        Box {
+                                                                                            size 0.04720618343126433 0.06123674205137879 0.20322635347012297
+
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                        name "LeftHipPitch"
+                                                                        children [
+                                                                            Shape {
+                                                                                appearance Appearance {
+                                                                                    material Material {
+                                                                                        diffuseColor 0.0 0.0 0.0
+                                                                                        ambientIntensity .4
+                                                                                    }
+                                                                                }
+                                                                                geometry Mesh {
+                                                                                    url "RFCRobot2016/geometries/LeftHipPitch.STL"
+                                                                                }
+                                                                            }
+                                                                            # LeftHipPitch2LeftHipPitch_body
+                                                                            Transform {
+                                                                                translation 0.000000 0.000000 0.000000
+                                                                                children [
+                                                                                    Solid {
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                            # LeftHipPitch2LeftKnee
+                                                                            Transform {
+                                                                                translation -0.001479 -0.000050 -0.172994
+                                                                                children [
+                                                                                    # mx106, 14.8V
+                                                                                    HingeJointWithBacklash{
+                                                                                        jointParameters HingeJointParameters {
+                                                                                            axis 0.000000 1.000000 -0.000000
+                                                                                            dampingConstant 1.23
+                                                                                            staticFriction 2.55
+                                                                                        }
+                                                                                        device [
+                                                                                            RotationalMotor {
+                                                                                                name "LeftKnee"
+                                                                                                minPosition 0.01
+                                                                                                maxPosition 2.5
+                                                                                                maxTorque 10.0
+                                                                                                maxVelocity 5.76
+                                                                                            }
+                                                                                            PositionSensor {
+                                                                                                name "LeftKnee_sensor"
+                                                                                                resolution 0.0015
+                                                                                            }
+                                                                                        ]
+                                                                                        endPoint Solid {
+                                                                                            physics Physics {
+                                                                                                density -1
+                                                                                                mass 0.07807834446430206
+                                                                                                centerOfMass [ 0.0045  -0.0017  -0.0935 ]
+                                                                                                inertiaMatrix [ 0.00029092979267659655 0.00024654474313989935 6.969445555567355e-05 1.5542010628360467e-05 -3.3007643787277195e-05 -6.3876452360132245e-06]
+                                                                                            }
+                                                                                            boundingObject Group {
+                                                                                                children [
+                                                                                                    Transform {
+                                                                                                        translation 0.0014114991576318183 -0.0007200390100479128 -0.08572727993724576
+                                                                                                        children [
+                                                                                                            Box {
+                                                                                                                size 0.05565331496579047 0.06400000303983688 0.2048335651824809
+
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                            name "LeftKnee"
+                                                                                            children [
+                                                                                                Shape {
+                                                                                                    appearance Appearance {
+                                                                                                        material Material {
+                                                                                                            diffuseColor 0.0 0.0 0.0
+                                                                                                            ambientIntensity .4
+                                                                                                        }
+                                                                                                    }
+                                                                                                    geometry Mesh {
+                                                                                                        url "RFCRobot2016/geometries/LeftKnee.STL"
+                                                                                                    }
+                                                                                                }
+                                                                                                # LeftKnee2LeftKnee_body
+                                                                                                Transform {
+                                                                                                    translation 0.000000 0.000000 0.000000
+                                                                                                    children [
+                                                                                                        Solid {
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                                # LeftKnee2LeftFootPitch
+                                                                                                Transform {
+                                                                                                    translation -0.001479 -0.000131 -0.172993
+                                                                                                    children [
+                                                                                                        # mx106, 14.8V
+                                                                                                        HingeJointWithBacklash{
+                                                                                                            jointParameters HingeJointParameters {
+                                                                                                                axis 0.000000 -1.000000 0.000000
+                                                                                                                dampingConstant 1.23
+                                                                                                                staticFriction 2.55
+                                                                                                            }
+                                                                                                            device [
+                                                                                                                RotationalMotor {
+                                                                                                                    name "LeftFootPitch"
+                                                                                                                    minPosition -2.0944
+                                                                                                                    maxPosition 2.0944
+                                                                                                                    maxTorque 10.0
+                                                                                                                    maxVelocity 5.76
+                                                                                                                }
+                                                                                                                PositionSensor {
+                                                                                                                    name "LeftFootPitch_sensor"
+                                                                                                                    resolution 0.0015
+                                                                                                                }
+                                                                                                            ]
+                                                                                                            endPoint Solid {
+                                                                                                                physics Physics {
+                                                                                                                    density -1
+                                                                                                                    mass 0.16655351221561432
+                                                                                                                    centerOfMass [ -0.0211  -0.0004   0.0146 ]
+                                                                                                                    inertiaMatrix [ 6.406397989665348e-05 0.00013888992562354705 0.00011763402485724343 5.246599422116978e-05 -5.3259457568402065e-05 9.45602309928651e-07]
+                                                                                                                }
+                                                                                                                boundingObject Group {
+                                                                                                                    children [
+                                                                                                                        Transform {
+                                                                                                                            translation -0.022949999198317524 0.0024113468825817134 0.01679999940097332
+                                                                                                                            children [
+                                                                                                                                Box {
+                                                                                                                                    size 0.09389999881386757 0.050000000745058074 0.06259999796748161
+
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                                name "LeftFootPitch"
+                                                                                                                children [
+                                                                                                                    Shape {
+                                                                                                                        appearance Appearance {
+                                                                                                                            material Material {
+                                                                                                                                diffuseColor 0.0 0.0 0.0
+                                                                                                                                ambientIntensity .4
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                        geometry Mesh {
+                                                                                                                            url "RFCRobot2016/geometries/LeftFootPitch.STL"
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    # LeftFootPitch2LeftFootPitch_body
+                                                                                                                    Transform {
+                                                                                                                        translation 0.000000 0.000000 0.000000
+                                                                                                                        children [
+                                                                                                                            Solid {
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                    # LeftFootPitch2LeftFootRoll
+                                                                                                                    Transform {
+                                                                                                                        translation 0.000000 0.000000 0.000000
+                                                                                                                        children [
+                                                                                                                            # mx64, 14.8V
+                                                                                                                            HingeJointWithBacklash{
+                                                                                                                                jointParameters HingeJointParameters {
+                                                                                                                                    axis -1.000000 0.000000 0.000000
+                                                                                                                                    dampingConstant 0.65
+                                                                                                                                    staticFriction 1.73
+                                                                                                                                }
+                                                                                                                                device [
+                                                                                                                                    RotationalMotor {
+                                                                                                                                        name "LeftFootRoll"
+                                                                                                                                        minPosition -2.0944
+                                                                                                                                        maxPosition 2.0944
+                                                                                                                                        maxTorque 7.3
+                                                                                                                                        maxVelocity 8.17
+                                                                                                                                    }
+                                                                                                                                    PositionSensor {
+                                                                                                                                        name "LeftFootRoll_sensor"
+                                                                                                                                        resolution 0.0015
+                                                                                                                                    }
+                                                                                                                                ]
+                                                                                                                                endPoint Solid {
+                                                                                                                                    physics Physics {
+                                                                                                                                        density -1
+                                                                                                                                        mass 0.5
+                                                                                                                                        centerOfMass [ -0.0083   0.0098  -0.0335 ]
+                                                                                                                                        inertiaMatrix [ 0.0005098456321068815 0.00108562901560512 0.001502635126678064 -0.0002106009613988311 0.0002598373497410862 1.422986244963649e-05]
+                                                                                                                                    }
+                                                                                                                                    boundingObject Group {
+                                                                                                                                        children [
+                                                                                                                                            Transform {
+                                                                                                                                                translation -0.016426287591457367 0.010411348193883898 -0.01265567634254694
+                                                                                                                                                children [
+                                                                                                                                                    Box {
+                                                                                                                                                        size 0.16768401861190796 0.10547319799661639 0.053288644179701805
+
+                                                                                                                                                    }
+                                                                                                                                                ]
+                                                                                                                                            }
+                                                                                                                                        ]
+                                                                                                                                    }
+                                                                                                                                    name "LeftFootRoll [foot]"
+                                                                                                                                    children [
+                                                                                                                                        Shape {
+                                                                                                                                            appearance Appearance {
+                                                                                                                                                material Material {
+                                                                                                                                                    diffuseColor 0.0 0.0 0.0
+                                                                                                                                                    ambientIntensity .4
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                            geometry Mesh {
+                                                                                                                                                url "RFCRobot2016/geometries/LeftFootRoll.STL"
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                        Transform {
+                                                                                                                                            translation -0.016426287591457367 0.010411348193883898 -0.0343
+                                                                                                                                            children [
+                                                                                                                                                Shape {
+                                                                                                                                                    appearance Appearance {
+                                                                                                                                                        material Material {
+                                                                                                                                                            diffuseColor 0.0 0.0 0.0
+                                                                                                                                                            ambientIntensity .4
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                    geometry Box {
+                                                                                                                                                        size 0.1677 0.1055 0.02
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                        # LeftFootRoll2LeftFootRoll_body
+                                                                                                                                        Transform {
+                                                                                                                                            translation 0.000000 0.000000 0.000000
+                                                                                                                                            children [
+                                                                                                                                                Solid {
+                                                                                                                                                    children [
+                                                                                                                                                        # LeftFootRoll_body2LeftFoot
+                                                                                                                                                        Transform {
+                                                                                                                                                            translation 0.000000 0.000000 -0.039000
+                                                                                                                                                            children [
+                                                                                                                                                                Solid {
+                                                                                                                                                                    children [
+                                                                                                                                                                        # LeftFoot2LeftFootFrontCenter
+                                                                                                                                                                        Transform {
+                                                                                                                                                                            translation 0.068000 0.000000 0.000000
+                                                                                                                                                                            children [
+                                                                                                                                                                                Solid {
+                                                                                                                                                                                    children [
+                                                                                                                                                                                        # LeftFootFrontCenter2LeftFootFrontLeft
+                                                                                                                                                                                        Transform {
+                                                                                                                                                                                            translation 0.000000 0.065000 0.000000
+                                                                                                                                                                                            children [
+                                                                                                                                                                                                Solid {
+                                                                                                                                                                                                }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                        # LeftFootFrontCenter2LeftFootFrontRight
+                                                                                                                                                                                        Transform {
+                                                                                                                                                                                            translation 0.000000 -0.040000 0.000000
+                                                                                                                                                                                            children [
+                                                                                                                                                                                                Solid {
+                                                                                                                                                                                                }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                    ]
+                                                                                                                                                                                }
+                                                                                                                                                                            ]
+                                                                                                                                                                        }
+                                                                                                                                                                        # LeftFoot2LeftFootBackCenter
+                                                                                                                                                                        Transform {
+                                                                                                                                                                            translation -0.100000 0.000000 0.000000
+                                                                                                                                                                            children [
+                                                                                                                                                                                Solid {
+                                                                                                                                                                                    children [
+                                                                                                                                                                                        # LeftFootBackCenter2LeftFootBackLeft
+                                                                                                                                                                                        Transform {
+                                                                                                                                                                                            translation 0.000000 0.065000 0.000000
+                                                                                                                                                                                            children [
+                                                                                                                                                                                                Solid {
+                                                                                                                                                                                                }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                        # LeftFootBackCenter2LeftFootBackRight
+                                                                                                                                                                                        Transform {
+                                                                                                                                                                                            translation 0.000000 -0.040000 0.000000
+                                                                                                                                                                                            children [
+                                                                                                                                                                                                Solid {
+                                                                                                                                                                                                }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                    ]
+                                                                                                                                                                                }
+                                                                                                                                                                            ]
+                                                                                                                                                                        }
+                                                                                                                                                                    ]
+                                                                                                                                                                }
+                                                                                                                                                            ]
+                                                                                                                                                        }
+                                                                                                                                                    ]
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+                # root2LeftShoulderPitch
+                Transform {
+                    translation -0.032156 0.082000 0.159404
+                    children [
+                        # mx64, 14.8V
+                        HingeJointWithBacklash{
+                            jointParameters HingeJointParameters {
+                                axis 0.000000 1.000000 0.000000
+                                dampingConstant 0.65
+                                staticFriction 1.73
+                            }
+                            device [
+                                RotationalMotor {
+                                    name "LeftShoulderPitch [shoulder]"
+                                    minPosition -2.0944
+                                    maxPosition 2.0944
+                                    maxTorque 7.3
+                                    maxVelocity 8.17
+                                }
+                                PositionSensor {
+                                    name "LeftShoulderPitch [shoulder]_sensor"
+                                    resolution 0.0015
+                                }
+                            ]
+                            endPoint Solid {
+                                physics Physics {
+                                    density -1
+                                    mass 0.04650014638900757
+                                    centerOfMass [ -0.0003   0.0198  -0.0105 ]
+                                    inertiaMatrix [ 1.1309023585654852e-05 1.307027276979988e-05 8.471517641981444e-06 -1.0834680883656436e-07 4.914137658731088e-07 2.8032421370906753e-07]
+                                }
+                                boundingObject Group {
+                                    children [
+                                        Transform {
+                                            translation -0.0032999999821186074 0.020550000481307507 -0.012900000903755426
+                                            children [
+                                                Box {
+                                                    size 0.04509999975562096 0.035600000992417336 0.05060000251978636
+
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                name "LeftShoulderPitch [arm]"
+                                children [
+                                    Shape {
+                                        appearance Appearance {
+                                            material Material {
+                                                diffuseColor 0.0 0.0 0.0
+                                                ambientIntensity .4
+                                            }
+                                        }
+                                        geometry Mesh {
+                                            url "RFCRobot2016/geometries/LeftShoulderPitch.STL"
+                                        }
+                                    }
+                                    # LeftShoulderPitch2LeftShoulderPitch_body
+                                    Transform {
+                                        translation 0.000000 0.000000 0.000000
+                                        children [
+                                            Solid {
+                                            }
+                                        ]
+                                    }
+                                    # LeftShoulderPitch2LeftShoulderRoll
+                                    Transform {
+                                        translation -0.000522 0.020550 0.000400
+                                        children [
+                                            # mx64, 14.8V
+                                            HingeJointWithBacklash{
+                                                jointParameters HingeJointParameters {
+                                                    axis -1.000000 -0.000000 0.000000
+                                                    dampingConstant 0.65
+                                                    staticFriction 1.73
+                                                }
+                                                device [
+                                                    RotationalMotor {
+                                                        name "LeftShoulderRoll"
+                                                        minPosition -3.142
+                                                        maxPosition 0.03
+                                                        maxTorque 7.3
+                                                        maxVelocity 8.17
+                                                    }
+                                                    PositionSensor {
+                                                        name "LeftShoulderRoll_sensor"
+                                                        resolution 0.0015
+                                                    }
+                                                ]
+                                                endPoint Solid {
+                                                    physics Physics {
+                                                        density -1
+                                                        mass 0.056488167494535446
+                                                        centerOfMass [ 0.0005   0.0003  -0.1206 ]
+                                                        inertiaMatrix [ 8.347006007093584e-05 8.598803035824993e-05 1.3629224982011726e-05 3.565870239690153e-06 -3.5635302280834122e-06 6.325591511746584e-07]
+                                                    }
+                                                    boundingObject Group {
+                                                        children [
+                                                            Transform {
+                                                                translation 0.0005222139880061152 0.003299999982118601 -0.0744999973103404
+                                                                children [
+                                                                    Box {
+                                                                        size 0.04499999992549419 0.04509999975562097 0.17099999822676182
+
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                    name "LeftShoulderRoll [arm]"
+                                                    children [
+                                                        Shape {
+                                                            appearance Appearance {
+                                                                material Material {
+                                                                    diffuseColor 0.0 0.0 0.0
+                                                                    ambientIntensity .4
+                                                                }
+                                                            }
+                                                            geometry Mesh {
+                                                                url "RFCRobot2016/geometries/LeftShoulderRoll.STL"
+                                                            }
+                                                        }
+                                                        # LeftShoulderRoll2LeftShoulderRoll_body
+                                                        Transform {
+                                                            translation 0.000000 0.000000 0.000000
+                                                            children [
+                                                                Solid {
+                                                                }
+                                                            ]
+                                                        }
+                                                        # LeftShoulderRoll2LeftElbow
+                                                        Transform {
+                                                            translation 0.000522 0.000522 -0.148000
+                                                            children [
+                                                                # mx28, 14.8V
+                                                                HingeJointWithBacklash{
+                                                                    jointParameters HingeJointParameters {
+                                                                        axis 0.000000 1.000000 0.000000
+                                                                        dampingConstant 0.31
+                                                                        staticFriction 1.03
+                                                                    }
+                                                                    device [
+                                                                        RotationalMotor {
+                                                                            name "LeftElbow"
+                                                                            minPosition -2.0944
+                                                                            maxPosition 2.0944
+                                                                            maxTorque 3.1
+                                                                            maxVelocity 7.02
+                                                                        }
+                                                                        PositionSensor {
+                                                                            name "LeftElbow_sensor"
+                                                                            resolution 0.0015
+                                                                        }
+                                                                    ]
+                                                                    endPoint Solid {
+                                                                        physics Physics {
+                                                                            density -1
+                                                                            mass 0.025215454399585724
+                                                                            centerOfMass [ 1.0382e-06   2.1478e-02  -9.0940e-02 ]
+                                                                            inertiaMatrix [ 6.205479617153557e-05 7.141024919208927e-05 9.393276167585855e-06 5.877994511772368e-09 -3.0674982588530894e-09 -8.84510112363361e-10]
+                                                                        }
+                                                                        boundingObject Group {
+                                                                            children [
+                                                                                Transform {
+                                                                                    translation 2.6302702886912043e-18 0.02147778682410717 -0.07669835537672043
+                                                                                    children [
+                                                                                        Box {
+                                                                                            size 0.07999999821186066 0.002999998629093177 0.1830032914876938
+
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                        name "LeftElbow [arm]"
+                                                                        children [
+                                                                            Shape {
+                                                                                appearance Appearance {
+                                                                                    material Material {
+                                                                                        diffuseColor %{=team_color}%
+                                                                                        ambientIntensity .4
+                                                                                    }
+                                                                                }
+                                                                                geometry Mesh {
+                                                                                    url "RFCRobot2016/geometries/LeftElbow.STL"
+                                                                                }
+                                                                            }
+                                                                            # LeftElbow2LeftElbow_body
+                                                                            Transform {
+                                                                                translation 0.000000 0.000000 0.000000
+                                                                                children [
+                                                                                    Solid {
+                                                                                        children [
+                                                                                            # LeftElbow_body2LeftHand
+                                                                                            Transform {
+                                                                                                translation 0.000000 0.022000 -0.138000
+                                                                                                children [
+                                                                                                    Solid {
+                                                                                                        children [
+                                                                                                            # LeftHand2LeftFinger
+                                                                                                            Transform {
+                                                                                                                translation 0.000000 0.000000 -0.030000
+                                                                                                                children [
+                                                                                                                    Solid {
+                                                                                                                            name "LeftFinger [hand]"
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+                # root2RightHipYaw
+                Transform {
+                    translation -0.034656 -0.057500 0.018069
+                    children [
+                        # mx64, 14.8V
+                        HingeJointWithBacklash{
+                            jointParameters HingeJointParameters {
+                                axis -0.000000 0.000000 -1.000000
+                                dampingConstant 0.65
+                                staticFriction 1.73
+                            }
+                            device [
+                                RotationalMotor {
+                                    name "RightHipYaw"
+                                    minPosition -1.5708
+                                    maxPosition 1.5708
+                                    maxTorque 7.3
+                                    maxVelocity 8.17
+                                }
+                                PositionSensor {
+                                    name "RightHipYaw_sensor"
+                                    resolution 0.0015
+                                }
+                            ]
+                            endPoint Solid {
+                                physics Physics {
+                                    density -1
+                                    mass 0.0339411161839962
+                                    centerOfMass [ -1.8393e-02   1.6903e-10  -3.0957e-02 ]
+                                    inertiaMatrix [ 7.267730874333802e-06 4.7570116727735015e-05 4.871226327385077e-05 -1.8793923750327364e-05 1.9325301199628443e-05 6.897787872825618e-14]
+                                }
+                                boundingObject Group {
+                                    children [
+                                        Transform {
+                                            translation -0.017708400264382362 0.0 -0.042911346070468426
+                                            children [
+                                                Box {
+                                                    size 0.10000000521540642 0.03547320142388344 0.04000000096857548
+
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                name "RightHipYaw"
+                                children [
+                                    Shape {
+                                        appearance Appearance {
+                                            material Material {
+                                                diffuseColor 0.0 0.0 0.0
+                                                ambientIntensity .4
+                                            }
+                                        }
+                                        geometry Mesh {
+                                            url "RFCRobot2016/geometries/RightHipYaw.STL"
+                                        }
+                                    }
+                                    # RightHipYaw2RightHipYaw_body
+                                    Transform {
+                                        translation 0.000000 0.000000 0.000000
+                                        children [
+                                            Solid {
+                                            }
+                                        ]
+                                    }
+                                    # RightHipYaw2RightHipRoll
+                                    Transform {
+                                        translation -0.042797 0.000000 -0.060211
+                                        children [
+                                            # mx106, 14.8V
+                                            HingeJointWithBacklash{
+                                                jointParameters HingeJointParameters {
+                                                    axis 1.000000 -0.000000 0.000000
+                                                    dampingConstant 1.23
+                                                    staticFriction 2.55
+                                                }
+                                                device [
+                                                    RotationalMotor {
+                                                        name "RightHipRoll [hip]"
+                                                        minPosition -2.0944
+                                                        maxPosition 1
+                                                        maxTorque 10.0
+                                                        maxVelocity 5.76
+                                                    }
+                                                    PositionSensor {
+                                                        name "RightHipRoll [hip]_sensor"
+                                                        resolution 0.0015
+                                                    }
+                                                ]
+                                                endPoint Solid {
+                                                    physics Physics {
+                                                        density -1
+                                                        mass 0.18309427797794342
+                                                        centerOfMass [ 0.0238   0.0002  -0.0147 ]
+                                                        inertiaMatrix [ 7.683568055096104e-05 0.00015873264507405507 0.00013516651291718527 6.459313552773335e-05 -6.597811739057604e-05 -1.057989978692873e-06]
+                                                    }
+                                                    boundingObject Group {
+                                                        children [
+                                                            Transform {
+                                                                translation 0.022588652558624744 0.0031500002369284673 -0.018050000071525574
+                                                                children [
+                                                                    Box {
+                                                                        size 0.09999999962747097 0.05529999919235708 0.06509999930858612
+
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                    name "RightHipRoll"
+                                                    children [
+                                                        Shape {
+                                                            appearance Appearance {
+                                                                material Material {
+                                                                    diffuseColor 0.0 0.0 0.0
+                                                                    ambientIntensity .4
+                                                                }
+                                                            }
+                                                            geometry Mesh {
+                                                                url "RFCRobot2016/geometries/RightHipRoll.STL"
+                                                            }
+                                                        }
+                                                        # RightHipRoll2RightHipRoll_body
+                                                        Transform {
+                                                            translation 0.000000 0.000000 0.000000
+                                                            children [
+                                                                Solid {
+                                                                }
+                                                            ]
+                                                        }
+                                                        # RightHipRoll2RightHipPitch
+                                                        Transform {
+                                                            translation 0.042489 0.000670 0.000000
+                                                            children [
+                                                                # mx106, 14.8V
+                                                                HingeJointWithBacklash{
+                                                                    jointParameters HingeJointParameters {
+                                                                        axis 0.000000 1.000000 -0.000000
+                                                                        dampingConstant 1.23
+                                                                        staticFriction 2.55
+                                                                    }
+                                                                    device [
+                                                                        RotationalMotor {
+                                                                            name "RightHipPitch"
+                                                                            minPosition -2.0944
+                                                                            maxPosition 2.0944
+                                                                            maxTorque 10.0
+                                                                            maxVelocity 5.76
+                                                                        }
+                                                                        PositionSensor {
+                                                                            name "RightHipPitch_sensor"
+                                                                            resolution 0.0015
+                                                                        }
+                                                                    ]
+                                                                    endPoint Solid {
+                                                                        physics Physics {
+                                                                            density -1
+                                                                            mass 0.1560063362121582
+                                                                            centerOfMass [ -0.0005  -0.0007  -0.1374 ]
+                                                                            inertiaMatrix [ 0.00032125978541540715 0.0002970898396070995 5.930513977255061e-05 -1.78090213779247e-05 1.0068949037320458e-05 9.12007031230333e-06]
+                                                                        }
+                                                                        boundingObject Group {
+                                                                            children [
+                                                                                Transform {
+                                                                                    translation -0.0007417051254596523 -0.0003116428183693902 -0.08673009872817726
+                                                                                    children [
+                                                                                        Box {
+                                                                                            size 0.04720618343126433 0.06123674205137879 0.20322635347012297
+
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                        name "RightHipPitch"
+                                                                        children [
+                                                                            Shape {
+                                                                                appearance Appearance {
+                                                                                    material Material {
+                                                                                        diffuseColor 0.0 0.0 0.0
+                                                                                        ambientIntensity .4
+                                                                                    }
+                                                                                }
+                                                                                geometry Mesh {
+                                                                                    url "RFCRobot2016/geometries/RightHipPitch.STL"
+                                                                                }
+                                                                            }
+                                                                            # RightHipPitch2RightHipPitch_body
+                                                                            Transform {
+                                                                                translation 0.000000 0.000000 0.000000
+                                                                                children [
+                                                                                    Solid {
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                            # RightHipPitch2RightKnee
+                                                                            Transform {
+                                                                                translation -0.001479 -0.000050 -0.172994
+                                                                                children [
+                                                                                    # mx106, 14.8V
+                                                                                    HingeJointWithBacklash{
+                                                                                        jointParameters HingeJointParameters {
+                                                                                            axis 0.000000 1.000000 -0.000000
+                                                                                            dampingConstant 1.23
+                                                                                            staticFriction 2.55
+                                                                                        }
+                                                                                        device [
+                                                                                            RotationalMotor {
+                                                                                                name "RightKnee"
+                                                                                                minPosition 0.01
+                                                                                                maxPosition 2.5
+                                                                                                maxTorque 10.0
+                                                                                                maxVelocity 5.76
+                                                                                            }
+                                                                                            PositionSensor {
+                                                                                                name "RightKnee_sensor"
+                                                                                                resolution 0.0015
+                                                                                            }
+                                                                                        ]
+                                                                                        endPoint Solid {
+                                                                                            physics Physics {
+                                                                                                density -1
+                                                                                                mass 0.07807834446430206
+                                                                                                centerOfMass [ 0.0043  -0.0028  -0.0894 ]
+                                                                                                inertiaMatrix [ 0.00030803708701385916 0.00026401713853632094 6.86880143520244e-05 1.45025453238431e-05 -3.017540514317418e-05 1.1684444436279674e-06]
+                                                                                            }
+                                                                                            boundingObject Group {
+                                                                                                children [
+                                                                                                    Transform {
+                                                                                                        translation 0.0014114991576318183 -0.0007200390100479128 -0.08572727993724576
+                                                                                                        children [
+                                                                                                            Box {
+                                                                                                                size 0.05565331496579047 0.06400000303983688 0.2048335651824809
+
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                            name "RightKnee"
+                                                                                            children [
+                                                                                                Shape {
+                                                                                                    appearance Appearance {
+                                                                                                        material Material {
+                                                                                                            diffuseColor 0.0 0.0 0.0
+                                                                                                            ambientIntensity .4
+                                                                                                        }
+                                                                                                    }
+                                                                                                    geometry Mesh {
+                                                                                                        url "RFCRobot2016/geometries/RightKnee.STL"
+                                                                                                    }
+                                                                                                }
+                                                                                                # RightKnee2RightKnee_body
+                                                                                                Transform {
+                                                                                                    translation 0.000000 0.000000 0.000000
+                                                                                                    children [
+                                                                                                        Solid {
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                                # RightKnee2RightFootPitch
+                                                                                                Transform {
+                                                                                                    translation -0.001479 -0.000131 -0.172993
+                                                                                                    children [
+                                                                                                        # mx106, 14.8V
+                                                                                                        HingeJointWithBacklash{
+                                                                                                            jointParameters HingeJointParameters {
+                                                                                                                axis 0.000000 -1.000000 -0.000000
+                                                                                                                dampingConstant 1.23
+                                                                                                                staticFriction 2.55
+                                                                                                            }
+                                                                                                            device [
+                                                                                                                RotationalMotor {
+                                                                                                                    name "RightFootPitch"
+                                                                                                                    minPosition -2.0944
+                                                                                                                    maxPosition 2.0944
+                                                                                                                    maxTorque 10.0
+                                                                                                                    maxVelocity 5.76
+                                                                                                                }
+                                                                                                                PositionSensor {
+                                                                                                                    name "RightFootPitch_sensor"
+                                                                                                                    resolution 0.0015
+                                                                                                                }
+                                                                                                            ]
+                                                                                                            endPoint Solid {
+                                                                                                                physics Physics {
+                                                                                                                    density -1
+                                                                                                                    mass 0.16655351221561432
+                                                                                                                    centerOfMass [ -0.0211  -0.0004   0.0146 ]
+                                                                                                                    inertiaMatrix [ 6.406397989665346e-05 0.000138889925623547 0.00011763402485724343 5.246599422116978e-05 -5.325945756840209e-05 9.456023099286511e-07]
+                                                                                                                }
+                                                                                                                boundingObject Group {
+                                                                                                                    children [
+                                                                                                                        Transform {
+                                                                                                                            translation -0.022949999198317524 0.0024113468825817134 0.01679999940097332
+                                                                                                                            children [
+                                                                                                                                Box {
+                                                                                                                                    size 0.09389999881386757 0.050000000745058074 0.06259999796748161
+
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                                name "RightFootPitch"
+                                                                                                                children [
+                                                                                                                    Shape {
+                                                                                                                        appearance Appearance {
+                                                                                                                            material Material {
+                                                                                                                                diffuseColor 0.0 0.0 0.0
+                                                                                                                                ambientIntensity .4
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                        geometry Mesh {
+                                                                                                                            url "RFCRobot2016/geometries/RightFootPitch.STL"
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    # RightFootPitch2RightFootPitch_body
+                                                                                                                    Transform {
+                                                                                                                        translation 0.000000 0.000000 0.000000
+                                                                                                                        children [
+                                                                                                                            Solid {
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                    # RightFootPitch2RightFootRoll
+                                                                                                                    Transform {
+                                                                                                                        translation 0.000000 0.000000 0.000000
+                                                                                                                        children [
+                                                                                                                            # mx64, 14.8V
+                                                                                                                            HingeJointWithBacklash{
+                                                                                                                                jointParameters HingeJointParameters {
+                                                                                                                                    axis -1.000000 0.000000 0.000000
+                                                                                                                                    dampingConstant 0.65
+                                                                                                                                    staticFriction 1.73
+                                                                                                                                }
+                                                                                                                                device [
+                                                                                                                                    RotationalMotor {
+                                                                                                                                        name "RightFootRoll"
+                                                                                                                                        minPosition -2.0944
+                                                                                                                                        maxPosition 2.0944
+                                                                                                                                        maxTorque 7.3
+                                                                                                                                        maxVelocity 8.17
+                                                                                                                                    }
+                                                                                                                                    PositionSensor {
+                                                                                                                                        name "RightFootRoll_sensor"
+                                                                                                                                        resolution 0.0015
+                                                                                                                                    }
+                                                                                                                                ]
+                                                                                                                                endPoint Solid {
+                                                                                                                                    physics Physics {
+                                                                                                                                        density -1
+                                                                                                                                        mass 0.5
+                                                                                                                                        centerOfMass [ -0.0083  -0.0110  -0.0335 ]
+                                                                                                                                        inertiaMatrix [ 0.0005098469562494755 0.0010865931282134198 0.0015035700692333474 -0.00012406375104209892 1.2588682814762884e-05 -1.4227917153379052e-05]
+                                                                                                                                    }
+                                                                                                                                    boundingObject Group {
+                                                                                                                                        children [
+                                                                                                                                            Transform {
+                                                                                                                                                translation -0.01643373444676398 -0.01158864982426167 -0.01265567634254694
+                                                                                                                                                children [
+                                                                                                                                                    Box {
+                                                                                                                                                        size 0.1676691249012947 0.10547320172190668 0.053288644179701805
+
+                                                                                                                                                    }
+                                                                                                                                                ]
+                                                                                                                                            }
+                                                                                                                                        ]
+                                                                                                                                    }
+                                                                                                                                    name "RightFootRoll [foot]"
+                                                                                                                                    children [
+                                                                                                                                        Shape {
+                                                                                                                                            appearance Appearance {
+                                                                                                                                                material Material {
+                                                                                                                                                    diffuseColor 0.0 0.0 0.0
+                                                                                                                                                    ambientIntensity .4
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                            geometry Mesh {
+                                                                                                                                                url "RFCRobot2016/geometries/RightFootRoll.STL"
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                        Transform {
+                                                                                                                                            translation -0.016426287591457367 -0.010411348193883898 -0.0343
+                                                                                                                                            children [
+                                                                                                                                                Shape {
+                                                                                                                                                    appearance Appearance {
+                                                                                                                                                        material Material {
+                                                                                                                                                            diffuseColor 0.0 0.0 0.0
+                                                                                                                                                            ambientIntensity .4
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                    geometry Box {
+                                                                                                                                                        size 0.1677 0.1055 0.02
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                        # RightFootRoll2RightFootRoll_body
+                                                                                                                                        Transform {
+                                                                                                                                            translation 0.000000 0.000000 0.000000
+                                                                                                                                            children [
+                                                                                                                                                Solid {
+                                                                                                                                                    children [
+                                                                                                                                                        # RightFootRoll_body2RightFoot
+                                                                                                                                                        Transform {
+                                                                                                                                                            translation 0.000000 0.000000 -0.039000
+                                                                                                                                                            children [
+                                                                                                                                                                Solid {
+                                                                                                                                                                    children [
+                                                                                                                                                                        # RightFoot2RightFootFrontCenter
+                                                                                                                                                                        Transform {
+                                                                                                                                                                            translation 0.068000 0.000000 0.000000
+                                                                                                                                                                            children [
+                                                                                                                                                                                Solid {
+                                                                                                                                                                                    children [
+                                                                                                                                                                                        # RightFootFrontCenter2RightFootFrontLeft
+                                                                                                                                                                                        Transform {
+                                                                                                                                                                                            translation 0.000000 0.040000 0.000000
+                                                                                                                                                                                            children [
+                                                                                                                                                                                                Solid {
+                                                                                                                                                                                                }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                        # RightFootFrontCenter2RightFootFrontRight
+                                                                                                                                                                                        Transform {
+                                                                                                                                                                                            translation 0.000000 -0.065000 0.000000
+                                                                                                                                                                                            children [
+                                                                                                                                                                                                Solid {
+                                                                                                                                                                                                }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                    ]
+                                                                                                                                                                                }
+                                                                                                                                                                            ]
+                                                                                                                                                                        }
+                                                                                                                                                                        # RightFoot2RightFootBackCenter
+                                                                                                                                                                        Transform {
+                                                                                                                                                                            translation -0.100000 0.000000 0.000000
+                                                                                                                                                                            children [
+                                                                                                                                                                                Solid {
+                                                                                                                                                                                    children [
+                                                                                                                                                                                        # RightFootBackCenter2RightFootBackLeft
+                                                                                                                                                                                        Transform {
+                                                                                                                                                                                            translation 0.000000 0.040000 0.000000
+                                                                                                                                                                                            children [
+                                                                                                                                                                                                Solid {
+                                                                                                                                                                                                }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                        # RightFootBackCenter2RightFootBackRight
+                                                                                                                                                                                        Transform {
+                                                                                                                                                                                            translation 0.000000 -0.065000 0.000000
+                                                                                                                                                                                            children [
+                                                                                                                                                                                                Solid {
+                                                                                                                                                                                                }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                    ]
+                                                                                                                                                                                }
+                                                                                                                                                                            ]
+                                                                                                                                                                        }
+                                                                                                                                                                    ]
+                                                                                                                                                                }
+                                                                                                                                                            ]
+                                                                                                                                                        }
+                                                                                                                                                    ]
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+                # root2RightShoulderPitch
+                Transform {
+                    translation -0.032156 -0.082000 0.159404
+                    children [
+                        # mx64, 14.8V
+                        HingeJointWithBacklash{
+                            jointParameters HingeJointParameters {
+                                axis 0.000000 -1.000000 0.000000
+                                dampingConstant 0.65
+                                staticFriction 1.73
+                            }
+                            device [
+                                RotationalMotor {
+                                    name "RightShoulderPitch [shoulder]"
+                                    minPosition -2.0944
+                                    maxPosition 2.0944
+                                    maxTorque 7.3
+                                    maxVelocity 8.17
+                                }
+                                PositionSensor {
+                                    name "RightShoulderPitch [shoulder]_sensor"
+                                    resolution 0.0015
+                                }
+                            ]
+                            endPoint Solid {
+                                physics Physics {
+                                    density -1
+                                    mass 0.04650014638900757
+                                    centerOfMass [ 0.0003  -0.0198  -0.0105 ]
+                                    inertiaMatrix [ 1.1309023585654852e-05 1.307027276979988e-05 8.471517641981444e-06 -5.183239736335709e-07 1.5958131604560525e-07 -2.8032421370906753e-07]
+                                }
+                                boundingObject Group {
+                                    children [
+                                        Transform {
+                                            translation 0.0032999999821186066 -0.020550000481307507 -0.012900000903755426
+                                            children [
+                                                Box {
+                                                    size 0.045099999755620956 0.035600000992417336 0.05060000251978636
+
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                                name "RightShoulderPitch [arm]"
+                                children [
+                                    Shape {
+                                        appearance Appearance {
+                                            material Material {
+                                                diffuseColor 0.0 0.0 0.0
+                                                ambientIntensity .4
+                                            }
+                                        }
+                                        geometry Mesh {
+                                            url "RFCRobot2016/geometries/RightShoulderPitch.STL"
+                                        }
+                                    }
+                                    # RightShoulderPitch2RightShoulderPitch_body
+                                    Transform {
+                                        translation 0.000000 0.000000 0.000000
+                                        children [
+                                            Solid {
+                                            }
+                                        ]
+                                    }
+                                    # RightShoulderPitch2RightShoulderRoll
+                                    Transform {
+                                        translation 0.000522 -0.020550 0.000400
+                                        children [
+                                            # mx64, 14.8V
+                                            HingeJointWithBacklash{
+                                                jointParameters HingeJointParameters {
+                                                    axis -1.000000 -0.000000 0.000000
+                                                    dampingConstant 0.65
+                                                    staticFriction 1.73
+                                                }
+                                                device [
+                                                    RotationalMotor {
+                                                        name "RightShoulderRoll"
+                                                        minPosition -0.03
+                                                        maxPosition 3.142
+                                                        maxTorque 7.3
+                                                        maxVelocity 8.17
+                                                    }
+                                                    PositionSensor {
+                                                        name "RightShoulderRoll_sensor"
+                                                        resolution 0.0015
+                                                    }
+                                                ]
+                                                endPoint Solid {
+                                                    physics Physics {
+                                                        density -1
+                                                        mass 0.056488167494535446
+                                                        centerOfMass [ -0.0005  -0.0003  -0.1206 ]
+                                                        inertiaMatrix [ 8.347006007093779e-05 8.598803035825232e-05 1.362922498201172e-05 -3.549338517162309e-06 3.5470074713687255e-06 -6.325591511746593e-07]
+                                                    }
+                                                    boundingObject Group {
+                                                        children [
+                                                            Transform {
+                                                                translation -0.0005222139880061152 -0.003299999982118612 -0.0744999973103404
+                                                                children [
+                                                                    Box {
+                                                                        size 0.04499999992549419 0.04509999975562097 0.17099999822676182
+
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                    name "RightShoulderRoll [arm]"
+                                                    children [
+                                                        Shape {
+                                                            appearance Appearance {
+                                                                material Material {
+                                                                    diffuseColor 0.0 0.0 0.0
+                                                                    ambientIntensity .4
+                                                                }
+                                                            }
+                                                            geometry Mesh {
+                                                                url "RFCRobot2016/geometries/RightShoulderRoll.STL"
+                                                            }
+                                                        }
+                                                        # RightShoulderRoll2RightShoulderRoll_body
+                                                        Transform {
+                                                            translation 0.000000 0.000000 0.000000
+                                                            children [
+                                                                Solid {
+                                                                }
+                                                            ]
+                                                        }
+                                                        # RightShoulderRoll2RightElbow
+                                                        Transform {
+                                                            translation -0.000522 -0.000522 -0.148000
+                                                            children [
+                                                                # mx28, 14.8V
+                                                                HingeJointWithBacklash{
+                                                                    jointParameters HingeJointParameters {
+                                                                        axis 0.000000 -1.000000 0.000000
+                                                                        dampingConstant 0.31
+                                                                        staticFriction 1.03
+                                                                    }
+                                                                    device [
+                                                                        RotationalMotor {
+                                                                            name "RightElbow"
+                                                                            minPosition -2.0944
+                                                                            maxPosition 2.0944
+                                                                            maxTorque 3.1
+                                                                            maxVelocity 7.02
+                                                                        }
+                                                                        PositionSensor {
+                                                                            name "RightElbow_sensor"
+                                                                            resolution 0.0015
+                                                                        }
+                                                                    ]
+                                                                    endPoint Solid {
+                                                                        physics Physics {
+                                                                            density -1
+                                                                            mass 0.025215454399585724
+                                                                            centerOfMass [ -1.0382e-06  -2.1478e-02  -9.0940e-02 ]
+                                                                            inertiaMatrix [ 6.205479617153606e-05 7.141024919208965e-05 9.393276167585844e-06 -4.753472091842145e-09 1.6938968326281539e-09 8.845101122210595e-10]
+                                                                        }
+                                                                        boundingObject Group {
+                                                                            children [
+                                                                                Transform {
+                                                                                    translation -2.6302702886912043e-18 -0.02147778682410717 -0.07669835537672043
+                                                                                    children [
+                                                                                        Box {
+                                                                                            size 0.07999999821186066 0.002999998629093177 0.1830032914876938
+
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                        name "RightElbow [arm]"
+                                                                        children [
+                                                                            Shape {
+                                                                                appearance Appearance {
+                                                                                    material Material {
+                                                                                        diffuseColor %{=team_color}%
+                                                                                        ambientIntensity .4
+                                                                                    }
+                                                                                }
+                                                                                geometry Mesh {
+                                                                                    url "RFCRobot2016/geometries/RightElbow.STL"
+                                                                                }
+                                                                            }
+                                                                            # RightElbow2RightElbow_body
+                                                                            Transform {
+                                                                                translation 0.000000 0.000000 0.000000
+                                                                                children [
+                                                                                    Solid {
+                                                                                        children [
+                                                                                            # RightElbow_body2RightHand
+                                                                                            Transform {
+                                                                                                translation 0.000000 -0.022000 -0.138000
+                                                                                                children [
+                                                                                                    Solid {
+                                                                                                        children [
+                                                                                                            # RightHand2RightFinger
+                                                                                                            Transform {
+                                                                                                                translation 0.000000 0.000000 -0.030000
+                                                                                                                children [
+                                                                                                                    Solid {
+                                                                                                                            name "RightFinger [hand]"
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+                Gyro {
+                    name "Gyroscope"
+                    lookupTable [ -34.907 -32768 0.0085138,
+                                  34.907 32767 0.0085138
+                                ]
+,
+                    resolution 1
+                }
+                Accelerometer {
+                    name "Accelerometer"
+                    lookupTable [ -156.96 -32768 0.0039062,
+                                  156.96 32767 0.0039062
+                                ]
+,
+                    resolution 1
+                }
+            ]
+        }
+    ]
+}
+}
+

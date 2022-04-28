@@ -6,6 +6,7 @@ For each robot an URDF description and MoveIt configuration is provided. Additio
 The goal of this repo is to allow people to easily test their software on different robot platforms. This allows validating if the algorithm is generally applicable, as well as direct comparison between achieved performances on a platform. For example, walk algorithms can be tested on all platforms and the achieved speeds on each robot can be compared.
 
 The proto files are taken from https://humanoid.robocup.org/hl-vs2022/teams/
+Some robots are not yet publicly in the git as we wait for some teams to provide licences for their model.
 
 What currently works and what not
 ---------------------------------

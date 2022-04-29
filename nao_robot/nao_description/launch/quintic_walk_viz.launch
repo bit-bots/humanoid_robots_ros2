@@ -1,0 +1,27 @@
+<launch>
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find nao_description)/urdf/robot.urdf'"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+  </node>
+
+
+  <param name="robot_description_semantic" textfile="$(find nao_moveit_config)/config/nao.srdf" />
+  <param name="robot_type_name" value="nao"/>
+  <!-- Load updated joint limits (override information from URDF) -->
+  <group ns="robot_description_planning">
+      <rosparam command="load" file="$(find nao_moveit_config)/config/joint_limits.yaml"/>
+  </group>
+
+  <!-- Load default settings for kinematics; these settings are overridden by settings in a node's namespace -->
+  <group ns="robot_description_kinematics">
+      <rosparam command="load" file="$(find nao_moveit_config)/config/kinematics.yaml"/>
+  </group>
+
+    <node pkg="rviz" type="rviz" args="-d $(find bitbots_quintic_walk)/config/walk.rviz" name="walk_rviz"/>
+    <rosparam file="$(find bitbots_quintic_walk)/config/walking_nao_optimization.yaml" command="load"/>
+
+    <node name="command_to_state" pkg="bitbots_quintic_walk" type="commands_to_joint_states.py" output="screen"/>
+    <node name="walking" pkg="bitbots_quintic_walk" type="WalkNode" output="screen"/>
+
+
+</launch>

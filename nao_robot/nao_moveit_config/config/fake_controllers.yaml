@@ -1,0 +1,52 @@
+trajectory_execution:
+  allowed_execution_duration_scaling: 1.2
+  allowed_goal_duration_margin: 0.5
+  allowed_start_tolerance: 0.01
+
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+controller_names:
+  - fake_LeftLeg_controller
+  - fake_RightLeg_controller
+  - fake_Legs_controller
+
+
+fake_RightLeg_controller:
+  action_ns: fake_RightLeg_controller
+  type: FollowJointTrajectory
+  default: true
+  joints:
+    - RHipYawPitch
+    - RHipRoll
+    - RHipPitch
+    - RKneePitch
+    - RAnklePitch
+    - RAnkleRoll
+fake_LeftLeg_controller:
+  action_ns: fake_LeftLeg_controller
+  type: FollowJointTrajectory
+  default: true
+  joints:
+    - LHipYawPitch
+    - LHipRoll
+    - LHipPitch
+    - LKneePitch
+    - LAnklePitch
+    - LAnkleRoll
+fake_Legs_controller:
+  action_ns: fake_Legs_controller
+  type: FollowJointTrajectory
+  default: false
+  joints:
+    - LHipYawPitch
+    - LHipRoll
+    - LHipPitch
+    - LKneePitch
+    - LAnklePitch
+    - LAnkleRoll
+    - RHipYawPitch
+    - RHipRoll
+    - RHipPitch
+    - RKneePitch
+    - RAnklePitch
+    - RAnkleRoll

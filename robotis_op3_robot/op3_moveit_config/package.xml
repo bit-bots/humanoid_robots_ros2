@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package format="2">
+
+  <name>op3_moveit_config</name>
+  <version>1.0.0</version>
+  <description>
+     An automatically generated package with all the configuration and launch files for using the op3 with the MoveIt! Motion Planning Framework
+  </description>
+  <author email="marc.bestmann@uni-hamburg.de">Marc Bestmann</author>
+  <maintainer email="marc.bestmann@uni-hamburg.de">Marc Bestmann</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://moveit.ros.org/</url>
+  <url type="bugtracker">https://github.com/ros-planning/moveit/issues</url>
+  <url type="repository">https://github.com/ros-planning/moveit</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>moveit_ros_move_group</exec_depend>
+  <exec_depend>moveit_fake_controller_manager</exec_depend>
+  <exec_depend>moveit_kinematics</exec_depend>
+  <exec_depend>moveit_planners_ompl</exec_depend>
+  <exec_depend>moveit_ros_visualization</exec_depend>
+  <exec_depend>moveit_setup_assistant</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+
+  <build_depend>op3_description</build_depend>
+  <exec_depend>op3_description</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

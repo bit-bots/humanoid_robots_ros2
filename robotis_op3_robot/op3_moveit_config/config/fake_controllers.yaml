@@ -1,0 +1,51 @@
+trajectory_execution:
+  allowed_execution_duration_scaling: 1.2
+  allowed_goal_duration_margin: 0.5
+  allowed_start_tolerance: 0.01
+
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+controller_names:
+  - fake_LeftLeg_controller
+  - fake_RightLeg_controller
+  - fake_Legs_controller
+
+fake_LeftLeg_controller:
+  action_ns: fake_LeftLeg_controller
+  type: FollowJointTrajectory
+  default: true
+  joints:
+    - l_hip_yaw
+    - l_hip_roll
+    - l_hip_pitch
+    - l_knee
+    - l_ank_pitch
+    - l_ank_roll
+fake_RightLeg_controller:
+  action_ns: fake_RightLeg_controller
+  type: FollowJointTrajectory
+  default: true
+  joints:
+    - r_hip_yaw
+    - r_hip_roll
+    - r_hip_pitch
+    - r_knee
+    - r_ank_pitch
+    - r_ank_roll
+fake_Legs_controller:
+  action_ns: fake_Legs_controller
+  type: FollowJointTrajectory
+  default: false
+  joints:
+    - l_hip_yaw
+    - l_hip_roll
+    - l_hip_pitch
+    - l_knee
+    - l_ank_pitch
+    - l_ank_roll
+    - r_hip_yaw
+    - r_hip_roll
+    - r_hip_pitch
+    - r_knee
+    - r_ank_pitch
+    - r_ank_roll

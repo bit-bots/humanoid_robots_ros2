@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: nao_description
+    relative_path: urdf/naoV50_generated_urdf/nao.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/nao.srdf
+  CONFIG:
+    author_name: a
+    author_email: test@test.com
+    generated_timestamp: 1601467142

@@ -1,0 +1,51 @@
+trajectory_execution:
+  allowed_execution_duration_scaling: 1.2
+  allowed_goal_duration_margin: 0.5
+  allowed_start_tolerance: 0.01
+
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+controller_names:
+  - fake_LeftLeg_controller
+  - fake_RightLeg_controller
+  - fake_Legs_controller
+
+fake_LeftLeg_controller:
+  action_ns: fake_LeftLeg_controller
+  type: FollowJointTrajectory
+  default: true
+  joints:
+    - left_leg_motor_0
+    - left_leg_motor_1 [hip]
+    - left_leg_motor_2
+    - left_leg_motor_3
+    - left_leg_motor_4
+    - left_leg_motor_5
+fake_RightLeg_controller:
+  action_ns: fake_RightLeg_controller
+  type: FollowJointTrajectory
+  default: true
+  joints:
+    - right_leg_motor_0
+    - right_leg_motor_1 [hip]
+    - right_leg_motor_2
+    - right_leg_motor_3
+    - right_leg_motor_4
+    - right_leg_motor_5
+fake_Legs_controller:
+  action_ns: fake_Legs_controller
+  type: FollowJointTrajectory
+  default: false
+  joints:
+    - left_leg_motor_0
+    - left_leg_motor_1 [hip]
+    - left_leg_motor_2
+    - left_leg_motor_3
+    - left_leg_motor_4
+    - left_leg_motor_5
+    - right_leg_motor_0
+    - right_leg_motor_1 [hip]
+    - right_leg_motor_2
+    - right_leg_motor_3
+    - right_leg_motor_4
+    - right_leg_motor_5

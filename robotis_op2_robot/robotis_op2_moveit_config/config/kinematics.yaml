@@ -1,0 +1,24 @@
+LeftLeg:
+  kinematics_solver: bio_ik/BioIKKinematicsPlugin
+  kinematics_solver_search_resolution: 0.001
+  kinematics_solver_timeout: 0.005
+RightLeg:
+  kinematics_solver: bio_ik/BioIKKinematicsPlugin
+  kinematics_solver_search_resolution: 0.001
+  kinematics_solver_timeout: 0.005
+LeftArm:
+  kinematics_solver: bio_ik/BioIKKinematicsPlugin
+  kinematics_solver_search_resolution: 0.001
+  kinematics_solver_timeout: 0.005
+RightArm:
+  kinematics_solver: bio_ik/BioIKKinematicsPlugin
+  kinematics_solver_search_resolution: 0.001
+  kinematics_solver_timeout: 0.005
+All:
+  kinematics_solver: bio_ik/BioIKKinematicsPlugin
+  kinematics_solver_search_resolution: 0.0001
+  kinematics_solver_timeout: 0.005
+Legs:
+  kinematics_solver: bio_ik/BioIKKinematicsPlugin
+  kinematics_solver_search_resolution: 0.001
+  kinematics_solver_timeout: 0.001

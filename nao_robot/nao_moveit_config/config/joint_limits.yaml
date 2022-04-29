@@ -1,0 +1,64 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+joint_limits:
+  LAnklePitch:
+    has_velocity_limits: true
+    max_velocity: 6.40239
+    has_acceleration_limits: false
+    max_acceleration: 0
+  LAnkleRoll:
+    has_velocity_limits: true
+    max_velocity: 4.16174
+    has_acceleration_limits: false
+    max_acceleration: 0
+  LHipPitch:
+    has_velocity_limits: true
+    max_velocity: 6.40239
+    has_acceleration_limits: false
+    max_acceleration: 0
+  LHipRoll:
+    has_velocity_limits: true
+    max_velocity: 4.16174
+    has_acceleration_limits: false
+    max_acceleration: 0
+  LHipYawPitch:
+    has_velocity_limits: true
+    max_velocity: 4.16174
+    has_acceleration_limits: false
+    max_acceleration: 0
+  LKneePitch:
+    has_velocity_limits: true
+    max_velocity: 6.40239
+    has_acceleration_limits: false
+    max_acceleration: 0
+  RAnklePitch:
+    has_velocity_limits: true
+    max_velocity: 6.40239
+    has_acceleration_limits: false
+    max_acceleration: 0
+  RAnkleRoll:
+    has_velocity_limits: true
+    max_velocity: 4.16174
+    has_acceleration_limits: false
+    max_acceleration: 0
+  RHipPitch:
+    has_velocity_limits: true
+    max_velocity: 6.40239
+    has_acceleration_limits: false
+    max_acceleration: 0
+  RHipRoll:
+    has_velocity_limits: true
+    max_velocity: 4.16174
+    has_acceleration_limits: false
+    max_acceleration: 0
+  RHipYawPitch:
+    has_velocity_limits: true
+    max_velocity: 4.16174
+    has_acceleration_limits: false
+    max_acceleration: 0
+  RKneePitch:
+    has_velocity_limits: true
+    max_velocity: 6.40239
+    has_acceleration_limits: false
+    max_acceleration: 0

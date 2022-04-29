@@ -1,0 +1,29 @@
+<package format="2">
+  <name>nao_description</name>
+  <version>0.5.15</version>
+  
+  <description>
+    Description of the Nao robot model that can be used with robot_state_publisher to display the robot's state of joint angles.
+  </description>
+
+  <author>Armin Hornung</author>
+  <author>Stefan Osswald</author>
+  <maintainer email="severin.lemaignan@epfl.ch">Séverin Lemaignan</maintainer>
+  <maintainer email="vincent.rabaud@gmail.com">Vincent Rabaud</maintainer>
+  <license>BSD</license>
+
+  <url>http://www.ros.org/wiki/nao_description</url>
+  <url type="bugtracker">https://github.com/ros-nao/nao_robot/issues</url>
+  <url type="repository">https://github.com/ros-nao/nao_robot</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>sensor_msgs</depend>
+  <depend>tf2</depend>
+  <depend>urdf</depend>
+  <depend>xacro</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+  
+</package>

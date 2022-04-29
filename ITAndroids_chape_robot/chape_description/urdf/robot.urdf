@@ -1,0 +1,590 @@
+<?xml version="1.0"?>
+<robot name="chape" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="base_link">
+  </link>
+  <link name="torso">
+  <visual>
+      <origin xyz="-0.0295 0 -0.00185" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.083 0.1095 0.0393"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.0295 0 -0.00185" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.083 0.1095 0.0393"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.0235 0 -0.03585" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.102 0.1022 0.0287"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.0235 0 -0.03585" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.102 0.1022 0.0287"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.0208 0 -0.06908" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0966 0.0992 0.03775"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.0208 0 -0.06908" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0966 0.0992 0.03775"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_fixed" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.12335"/>
+    <axis xyz="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="torso"/>
+  </joint>
+  <joint name="rightHipYaw" type="revolute">
+    <parent link="base_link"/>
+    <child link="rightPelvisY"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="2.5" lower="-1.0" upper="1.0" velocity="5.76"/>
+    <origin xyz="-0.0037 -0.0375 0.0" rpy="0 0 0"/>
+  </joint>
+  <link name="rightPelvisY">
+    <visual>
+      <origin xyz="0.00275 0 -0.016" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0505 0.027 0.034"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00275 0 -0.016" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0505 0.027 0.034"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rightHipRoll[hip]" type="revolute">
+    <parent link="rightPelvisY"/>
+    <child link="rightPelvis"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="2.5" lower="-1.5" upper="1.5" velocity="5.76"/>
+    <origin xyz="0 0 -0.0305" rpy="0 0 0"/>
+  </joint>
+  <link name="rightPelvis">
+    <visual>
+      <origin xyz="-0.02147 0 -0.0133" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07855 0.0356 0.0506"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.02147 0 -0.0133" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07855 0.0356 0.0506"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rightHipPitch" type="revolute">
+    <parent link="rightPelvis"/>
+    <child link="rightThigh"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="-1.5" upper="1.5" velocity="5.76"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="rightThigh">
+    <visual>
+      <origin xyz="0 0 -0.02435" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.045 0.0537"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.02435" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.045 0.0537"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.00007 0 -0.0781" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0356 0.0355 0.0538"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00007 0 -0.0781" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0356 0.0355 0.0538"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rightKneePitch" type="revolute">
+    <parent link="rightThigh"/>
+    <child link="rightTibia"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="0.0" upper="2.0" velocity="5.76"/>
+    <origin xyz="0 0 -0.093" rpy="0 0 0"/>
+  </joint>
+  <link name="rightTibia">
+    <visual>
+      <origin xyz="0.00181 0 -0.04275" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03938 0.045 0.1055"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00181 0 -0.04275" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03938 0.045 0.1055"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rightAnklePitch" type="revolute">
+    <parent link="rightTibia"/>
+    <child link="rightAnkle"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="-1.0" upper="1.0" velocity="5.76"/>
+    <origin xyz="0 0 -0.093" rpy="0 0 0"/>
+  </joint>
+  <link name="rightAnkle">
+    <visual>
+      <origin xyz="-0.02147 0 0.0133" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07855 0.0356 0.0506"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.02147 0 0.0133" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07855 0.0356 0.0506"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rightAnkleRoll" type="revolute">
+    <parent link="rightAnkle"/>
+    <child link="rightFoot[foot]"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="2.5" lower="-1.0" upper="1.0" velocity="5.76"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="rightFoot[foot]">
+    <visual>
+      <origin xyz="0.00275 0 -0.0145" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0505 0.027 0.034"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00275 0 -0.0145" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0505 0.027 0.034"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.00275 -0.013 -0.023875" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.14 0.08 0.06475"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00275 -0.013 -0.023875" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.14 0.08 0.06475"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="r_sole">
+  </link>
+  <joint name="r_sole_frame" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.056"/>
+    <axis xyz="0.0 0.0 0.0"/>
+    <parent link="rightFoot[foot]"/>
+    <child link="r_sole"/>
+  </joint>
+  <joint name="leftHipYaw" type="revolute">
+    <parent link="base_link"/>
+    <child link="leftPelvisY"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="2.5" lower="-1.0" upper="1.0" velocity="5.76"/>
+    <origin xyz="-0.0037 0.0375 0.0" rpy="0 0 0"/>
+  </joint>
+  <link name="leftPelvisY">
+    <visual>
+      <origin xyz="0.00275 0 -0.016" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0505 0.027 0.034"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00275 0 -0.016" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0505 0.027 0.034"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftHipRoll[hip]" type="revolute">
+    <parent link="leftPelvisY"/>
+    <child link="leftPelvis"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="2.5" lower="-1.5" upper="1.5" velocity="5.76"/>
+    <origin xyz="0 0 -0.0305" rpy="0 0 0"/>
+  </joint>
+  <link name="leftPelvis">
+    <visual>
+      <origin xyz="-0.02147 0 -0.0133" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07855 0.0356 0.0506"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.02147 0 -0.0133" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07855 0.0356 0.0506"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftHipPitch" type="revolute">
+    <parent link="leftPelvis"/>
+    <child link="leftThigh"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="-1.5" upper="1.5" velocity="5.76"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="leftThigh">
+    <visual>
+      <origin xyz="0 0 -0.02435" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.045 0.0537"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.02435" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.045 0.0537"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.00007 0 -0.0781" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0356 0.0355 0.0538"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00007 0 -0.0781" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0356 0.0355 0.0538"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftKneePitch" type="revolute">
+    <parent link="leftThigh"/>
+    <child link="leftTibia"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="0.0" upper="2.0" velocity="5.76"/>
+    <origin xyz="0 0 -0.093" rpy="0 0 0"/>
+  </joint>
+  <link name="leftTibia">
+    <visual>
+      <origin xyz="0.00181 0 -0.04275" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03938 0.045 0.1055"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00181 0 -0.04275" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03938 0.045 0.1055"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftAnklePitch" type="revolute">
+    <parent link="leftTibia"/>
+    <child link="leftAnkle"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="-1.0" upper="1.0" velocity="5.76"/>
+    <origin xyz="0 0 -0.093" rpy="0 0 0"/>
+  </joint>
+  <link name="leftAnkle">
+    <visual>
+      <origin xyz="-0.02147 0 0.0133" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07855 0.0356 0.0506"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.02147 0 0.0133" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.07855 0.0356 0.0506"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftAnkleRoll" type="revolute">
+    <parent link="leftAnkle"/>
+    <child link="leftFoot[foot]"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="2.5" lower="-1.0" upper="1.0" velocity="5.76"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="leftFoot[foot]">
+    <visual>
+      <origin xyz="0.00275 0 -0.0145" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0505 0.027 0.034"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00275 0 -0.0145" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0505 0.027 0.034"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.00275 0.013 -0.023875" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.14 0.08 0.06475"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.00275 0.013 -0.023875" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.14 0.08 0.06475"/>
+      </geometry>
+    </collision>
+  </link>
+    <link name="l_sole">
+  </link>
+  <joint name="l_sole_frame" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.056"/>
+    <axis xyz="0.0 0.0 0.0"/>
+    <parent link="leftFoot[foot]"/>
+    <child link="l_sole"/>
+  </joint>
+  <joint name="rightShoulderPitch[shoulder]" type="revolute">
+    <parent link="torso"/>
+    <child link="rightShoulder"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="-3.14159" upper="3.14159" velocity="5.76"/>
+    <origin xyz="0 -0.0566 0" rpy="0 0 0"/>
+  </joint>
+  <link name="rightShoulder">
+    <visual>
+      <origin xyz="0 -0.01725 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.045 0.0327 0.0377"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.01725 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.045 0.0327 0.0377"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rightShoulderYaw" type="revolute">
+    <parent link="rightShoulder"/>
+    <child link="rightArmUpper[arm]"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="2.5" lower="-3.14159" upper="3.14159" velocity="5.76"/>
+    <origin xyz="0 -0.0254 -0.016" rpy="0 0 0"/>
+  </joint>
+  <link name="rightArmUpper[arm]">
+    <visual>
+      <origin xyz="0 -0.01385 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0355 0.0517 0.0356"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.01385 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0355 0.0517 0.0356"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.0027 -0.05875 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0506 0.0356 0.0355"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0027 -0.05875 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0506 0.0356 0.0355"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rightElbowYaw" type="revolute">
+    <parent link="rightArmUpper[arm]"/>
+    <child link="rightArmLower[hand]"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="2.5" lower="-3.14159" upper="3.14159" velocity="5.76"/>
+    <origin xyz="0.016 -0.06 0" rpy="0 0 0"/>
+  </joint>
+  <link name="rightArmLower[hand]">
+    <visual>
+      <origin xyz="-0.01605 -0.10751 0.002515" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06207 0.23413 0.05003"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.01605 -0.10751 0.002515" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06207 0.23413 0.05003"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftShoulderPitch[shoulder]" type="revolute">
+    <parent link="torso"/>
+    <child link="leftShoulder"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="-3.14159" upper="3.14159" velocity="5.76"/>
+    <origin xyz="0 0.0566 0" rpy="0 0 0"/>
+  </joint>
+  <link name="leftShoulder">
+    <visual>
+      <origin xyz="0 0.01725 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.045 0.0327 0.0377"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.01725 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.045 0.0327 0.0377"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftShoulderYaw" type="revolute">
+    <parent link="leftShoulder"/>
+    <child link="leftArmUpper[arm]"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="2.5" lower="-3.14159" upper="3.14159" velocity="5.76"/>
+    <origin xyz="0 0.0254 -0.016" rpy="0 0 0"/>
+  </joint>
+  <link name="leftArmUpper[arm]">
+    <visual>
+      <origin xyz="0 0.01385 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0355 0.0517 0.0356"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.01385 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0355 0.0517 0.0356"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.0027 0.05875 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0506 0.0356 0.0355"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0027 0.05875 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0506 0.0356 0.0355"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftElbowYaw" type="revolute">
+    <parent link="leftArmUpper[arm]"/>
+    <child link="leftArmLower[hand]"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="2.5" lower="-3.14159" upper="3.14159" velocity="5.76"/>
+    <origin xyz="0.016 0.06 0" rpy="0 0 0"/>
+  </joint>
+  <link name="leftArmLower[hand]">
+    <visual>
+      <origin xyz="-0.01605 0.10751 0.002515" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06207 0.23413 0.05003"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.01605 0.10751 0.002515" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06207 0.23413 0.05003"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neckYaw" type="revolute">
+    <parent link="torso"/>
+    <child link="neck"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="2.5" lower="-3.14159" upper="3.14159" velocity="5.76"/>
+    <origin xyz="0 0 0.0217" rpy="0 0 0"/>
+  </joint>
+  <link name="neck">
+    <visual>
+      <origin xyz="0 0 0.01525" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.045 0.0325"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.01525" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.045 0.0325"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neckPitch" type="revolute">
+    <parent link="neck"/>
+    <child link="head"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="2.5" lower="-3.14159" upper="3.14159" velocity="5.76"/>
+    <origin xyz="0 0 0.029" rpy="0 0 0"/>
+  </joint>
+  <link name="head">
+    <visual>
+      <origin xyz="0 0 0.0105" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0356 0.0355 0.045"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0105" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0356 0.0355 0.045"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0.0662" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0428 0.098 0.049"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0662" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0428 0.098 0.049"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="Camera">
+  </link>
+  <joint name="head_Camera_joint" type="fixed">
+    <parent link="head"/>
+    <child link="Camera"/>
+    <origin xyz="0.0144 0 0.06302" rpy="1.570796 0 -1.570796"/>
+  </joint>
+  <link name="imu_frame">
+  </link>
+  <joint name="torso_Gyro_joint" type="fixed">
+    <parent link="torso"/>
+    <child link="imu_frame"/>
+    <origin xyz="0 0 0" rpy="0 0 3.141585"/>
+  </joint>
+  <link name="Accelerometer">
+  </link>
+  <joint name="torso_Accelerometer_joint" type="fixed">
+    <parent link="torso"/>
+    <child link="Accelerometer"/>
+    <origin xyz="0 0 0" rpy="0 0 -1.5708"/>
+  </joint>
+</robot>

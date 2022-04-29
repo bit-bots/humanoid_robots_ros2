@@ -1,0 +1,52 @@
+#VRML_SIM R2021b utf8
+DEF world_info WorldInfo {
+  basicTimeStep 8
+  physicsDisableTime 0.1
+  physicsDisableLinearThreshold 0.1
+  physicsDisableAngularThreshold 0.1
+  contactProperties [
+    ContactProperties {
+      material1 "grass"
+      coulombFriction [
+        0.5
+      ]
+      softCFM 0.03
+    }
+    ContactProperties {
+      material1 "grass"
+      material2 "robocup soccer ball"
+      coulombFriction [
+        0.5
+      ]
+      bounce 0.76
+      softCFM 0.05
+    }
+    ContactProperties {
+      material2 "robocup soccer ball"
+      bounce 0.76
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.9847084491345215 -0.10277053120262829 -0.14066800673719326 1.2682739615814562
+  position 0.08013871715742138 -3.769502482965708 1.4700079098487477
+}
+TexturedBackground {
+  texture "stadium_dry"
+}
+TexturedBackgroundLight {
+  texture "stadium_dry"
+}
+Floor {
+  rotation 1 0 0 1.57
+  contactMaterial "grass"
+  size 100 100
+  tileSize 2 2
+}
+DEF amy ChapeOptimization {
+  translation 2.07294e-08 0.28 -1.0534e-06
+  rotation 0.5773509358554485 0.5773509358554485 0.5773489358556708 -2.094395307179586
+  name "amy"
+  controller "<extern>"
+  supervisor TRUE
+}

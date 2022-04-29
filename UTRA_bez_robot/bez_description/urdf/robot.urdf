@@ -1,0 +1,836 @@
+<?xml version="1.0"?>
+<robot name="bez" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="base_link">
+  </link>
+  <link name="torso">
+    <visual>
+      <origin xyz="0.012 0 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.105 0.145 0.152"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.012 0 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.105 0.145 0.152"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_link_torso" type="fixed">
+    <parent link="base_link"/>
+    <child link="torso"/>
+    <origin xyz="0 0 0.156" rpy="0 0 0"/>
+  </joint>
+  <link name="imu_frame">
+  </link>
+  <joint name="torso_imu_frame_joint" type="fixed">
+    <parent link="torso"/>
+    <child link="imu_frame"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="imu gyro">
+  </link>
+  <joint name="imu_frame_imu gyro_joint" type="fixed">
+    <parent link="imu_frame"/>
+    <child link="imu gyro"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="imu accelerometer">
+  </link>
+  <joint name="imu_frame_imu accelerometer_joint" type="fixed">
+    <parent link="imu_frame"/>
+    <child link="imu accelerometer"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <joint name="head_motor_0" type="revolute">
+    <parent link="torso"/>
+    <child link="neck"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="3.1" lower="-1.5708" upper="1.5708" velocity="7.02"/>
+    <origin xyz="0.024 0 0.05875" rpy="0 0 0"/>
+  </joint>
+  <link name="neck">
+    <visual>
+      <origin xyz="0 0 0.017" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.0523 0.033"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.017" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.0523 0.033"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_motor_1" type="revolute">
+    <parent link="neck"/>
+    <child link="head"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="3.1" lower="-2.35619" upper="2.35619" velocity="7.02"/>
+    <origin xyz="0 0 0.024" rpy="0 0 0"/>
+  </joint>
+  <link name="head">
+    <visual>
+      <origin xyz="-0.01 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0712 0.094 0.0779"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.01 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0712 0.094 0.0779"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="camera">
+  </link>
+  <joint name="head_camera_joint" type="fixed">
+    <parent link="head"/>
+    <child link="camera"/>
+    <origin xyz="0.015 0.00145 0.0474" rpy="0 0 -1.5708"/>
+  </joint>
+  <link name="camera_0">
+  </link>
+  <joint name="camera_camera_0_joint" type="fixed">
+    <parent link="camera"/>
+    <child link="camera_0"/>
+    <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+  </joint>
+  <joint name="right_leg_motor_0" type="revolute">
+    <parent link="base_link"/>
+    <child link="right_hip_side"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="3.1" lower="-1.309" upper="0.524" velocity="7.02"/>
+    <origin xyz="0.0135 -0.035 0.0" rpy="0 0 0"/>
+  </joint>
+  <link name="right_hip_side">
+    <visual>
+      <origin xyz="0 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0485 0.022 0.039"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0485 0.022 0.039"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_leg_motor_1 [hip]" type="revolute">
+    <parent link="right_hip_side"/>
+    <child link="right_hip_front"/>
+    <axis xyz="-1 0 0"/>
+    <limit effort="3.1" lower="-0.785398" upper="1.5708" velocity="7.02"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="right_hip_front">
+    <visual>
+      <origin xyz="-0.023 0 -0.012" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.04885 0.0506"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.023 0 -0.012" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.04885 0.0506"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_leg_motor_2" type="revolute">
+    <parent link="right_hip_front"/>
+    <child link="right_thigh"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="-0.785398" upper="2.35619" velocity="7.02"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="right_thigh">
+    <visual>
+      <origin xyz="0 0 -0.045" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.048 0.111"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.045" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.048 0.111"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_leg_motor_3" type="revolute">
+    <parent link="right_thigh"/>
+    <child link="right_calve"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="-2.793" upper="0" velocity="7.02"/>
+    <origin xyz="0 0 -0.089" rpy="0 0 0"/>
+  </joint>
+  <link name="right_calve">
+    <visual>
+      <origin xyz="0 0 -0.0389" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.031883 0.048 0.105683"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.0389" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.031883 0.048 0.105683"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_leg_motor_4" type="revolute">
+    <parent link="right_calve"/>
+    <child link="right_ankle"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="-0.785398" upper="1.5708" velocity="7.02"/>
+    <origin xyz="0 0 -0.0866" rpy="0 0 0"/>
+  </joint>
+  <link name="right_ankle">
+    <visual>
+      <origin xyz="-0.02 0 0.013" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.090769 0.042 0.04"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.02 0 0.013" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.090769 0.042 0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_leg_motor_5" type="revolute">
+    <parent link="right_ankle"/>
+    <child link="right_foot [foot]"/>
+    <axis xyz="-1 0 0"/>
+    <limit effort="3.1" lower="-0.785398" upper="0.785398" velocity="7.02"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="right_foot [foot]">
+    <visual>
+      <origin xyz="0.002 -0.001 -0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.09 0.07 0.004"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.002 -0.001 -0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.09 0.07 0.004"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="r_sole">
+  </link>
+  <joint name="r_sole_frame" type="fixed">
+    <origin xyz="0.0 0.0 -0.03" rpy="0 0 0"/>
+    <axis xyz="0.0 0.0 0.0"/>
+    <parent link="right_foot [foot]"/>
+    <child link="r_sole"/>
+  </joint>
+
+  <link name="right_leg_foot_sensor_4">
+    <visual>
+      <origin xyz="0 -0.005 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.005 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0075 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0075 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_foot [foot]_right_leg_foot_sensor_4_joint" type="fixed">
+    <parent link="right_foot [foot]"/>
+    <child link="right_leg_foot_sensor_4"/>
+    <origin xyz="-0.03375 0.028 -0.0221" rpy="1.57 0 0"/>
+  </joint>
+  <link name="right_leg_foot_sensor_3">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_foot [foot]_right_leg_foot_sensor_3_joint" type="fixed">
+    <parent link="right_foot [foot]"/>
+    <child link="right_leg_foot_sensor_3"/>
+    <origin xyz="-0.03375 -0.025 -0.0221" rpy="1.57 0 0"/>
+  </joint>
+  <link name="right_leg_foot_sensor_2">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_foot [foot]_right_leg_foot_sensor_2_joint" type="fixed">
+    <parent link="right_foot [foot]"/>
+    <child link="right_leg_foot_sensor_2"/>
+    <origin xyz="0.03975 -0.025 -0.0221" rpy="1.57 0 0"/>
+  </joint>
+  <link name="right_leg_foot_sensor_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_foot [foot]_right_leg_foot_sensor_1_joint" type="fixed">
+    <parent link="right_foot [foot]"/>
+    <child link="right_leg_foot_sensor_1"/>
+    <origin xyz="0.03975 0.033 -0.0221" rpy="1.57 0 0"/>
+  </joint>
+  <joint name="left_leg_motor_0" type="revolute">
+    <parent link="base_link"/>
+    <child link="left_hip_side"/>
+    <axis xyz="0 0 -1"/>
+    <limit effort="3.1" lower="-1.309" upper="0.524" velocity="7.02"/>
+    <origin xyz="0.0135 0.035 0.0" rpy="0 0 0"/>
+  </joint>
+  <link name="left_hip_side">
+    <visual>
+      <origin xyz="0 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0485 0.022 0.039"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0485 0.022 0.039"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_leg_motor_1 [hip]" type="revolute">
+    <parent link="left_hip_side"/>
+    <child link="left_hip_front"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="3.1" lower="-0.785398" upper="1.5708" velocity="7.02"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="left_hip_front">
+    <visual>
+      <origin xyz="-0.023 0 -0.012" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.04885 0.0506"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.023 0 -0.012" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.04885 0.0506"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_leg_motor_2" type="revolute">
+    <parent link="left_hip_front"/>
+    <child link="left_thigh"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="-0.785398" upper="2.35619" velocity="7.02"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="left_thigh">
+    <visual>
+      <origin xyz="0 0 -0.045" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.048 0.111"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.045" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.022 0.048 0.111"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_leg_motor_3" type="revolute">
+    <parent link="left_thigh"/>
+    <child link="left_calve"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="-2.793" upper="0" velocity="7.02"/>
+    <origin xyz="0 0 -0.089" rpy="0 0 0"/>
+  </joint>
+  <link name="left_calve">
+    <visual>
+      <origin xyz="0 0 -0.0389" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.031883 0.048 0.105683"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.0389" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.031883 0.048 0.105683"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_leg_motor_4" type="revolute">
+    <parent link="left_calve"/>
+    <child link="left_ankle"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="-0.785398" upper="1.5708" velocity="7.02"/>
+    <origin xyz="0 0 -0.0866" rpy="0 0 0"/>
+  </joint>
+  <link name="left_ankle">
+    <visual>
+      <origin xyz="-0.02 0 0.013" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.090769 0.042 0.04"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.02 0 0.013" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.090769 0.042 0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_leg_motor_5" type="revolute">
+    <parent link="left_ankle"/>
+    <child link="left_foot [foot]"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="3.1" lower="-0.785398" upper="0.785398" velocity="7.02"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="left_foot [foot]">
+    <visual>
+      <origin xyz="0.002 0.001 -0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.09 0.07 0.004"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.002 0.001 -0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.09 0.07 0.004"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="l_sole">
+  </link>
+  <joint name="l_sole_frame" type="fixed">
+    <origin xyz="0.0 0.0 -0.03" rpy="0 0 0"/>
+    <axis xyz="0.0 0.0 0.0"/>
+    <parent link="left_foot [foot]"/>
+    <child link="l_sole"/>
+  </joint>
+  <link name="left_leg_foot_sensor_4">
+    <visual>
+      <origin xyz="0 0.005 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.005 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0075 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0075 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_foot [foot]_left_leg_foot_sensor_4_joint" type="fixed">
+    <parent link="left_foot [foot]"/>
+    <child link="left_leg_foot_sensor_4"/>
+    <origin xyz="-0.03375 0.03 -0.0221" rpy="1.57 0 0"/>
+  </joint>
+  <link name="left_leg_foot_sensor_3">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_foot [foot]_left_leg_foot_sensor_3_joint" type="fixed">
+    <parent link="left_foot [foot]"/>
+    <child link="left_leg_foot_sensor_3"/>
+    <origin xyz="-0.03375 -0.033 -0.0221" rpy="1.57 0 0"/>
+  </joint>
+  <link name="left_leg_foot_sensor_2">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_foot [foot]_left_leg_foot_sensor_2_joint" type="fixed">
+    <parent link="left_foot [foot]"/>
+    <child link="left_leg_foot_sensor_2"/>
+    <origin xyz="0.03975 -0.033 -0.0221" rpy="1.57 0 0"/>
+  </joint>
+  <link name="left_leg_foot_sensor_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.005" length="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0025 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_foot [foot]_left_leg_foot_sensor_1_joint" type="fixed">
+    <parent link="left_foot [foot]"/>
+    <child link="left_leg_foot_sensor_1"/>
+    <origin xyz="0.03975 0.025 -0.0221" rpy="1.57 0 0"/>
+  </joint>
+  <joint name="right_arm_motor_0 [shoulder]" type="revolute">
+    <parent link="torso"/>
+    <child link="right_bicep [arm]"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="-1.5708" upper="3.92699" velocity="7.02"/>
+    <origin xyz="-0.0157 -0.0725 0" rpy="0 0 0"/>
+  </joint>
+  <link name="right_bicep [arm]">
+    <visual>
+      <origin xyz="0 -0.025 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.04776 0.123"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.025 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.04776 0.123"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_arm_motor_1" type="revolute">
+    <parent link="right_bicep [arm]"/>
+    <child link="right_forearm [arm]"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="0" upper="3.14159" velocity="7.02"/>
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+  </joint>
+  <link name="right_forearm [arm]">
+    <visual>
+      <origin xyz="-0.0055 -0.025 -0.09" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.035 0.049 0.144"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.0055 -0.025 -0.09" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.035 0.049 0.144"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_hand [hand]">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.005 0.02 0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.005 0.02 0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_forearm [arm]_right_hand [hand]_joint" type="fixed">
+    <parent link="right_forearm [arm]"/>
+    <child link="right_hand [hand]"/>
+    <origin xyz="-0.01 -0.025 -0.16" rpy="0 0 0"/>
+  </joint>
+  <joint name="left_arm_motor_0 [shoulder]" type="revolute">
+    <parent link="torso"/>
+    <child link="left_bicep [arm]"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="-1.5708" upper="3.92699" velocity="7.02"/>
+    <origin xyz="-0.0157 0.0725 0" rpy="0 0 0"/>
+  </joint>
+  <link name="left_bicep [arm]">
+    <visual>
+      <origin xyz="0 0.025 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.04776 0.123"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.025 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.04776 0.123"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_arm_motor_1" type="revolute">
+    <parent link="left_bicep [arm]"/>
+    <child link="left_forearm [arm]"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="3.1" lower="0" upper="3.14159" velocity="7.02"/>
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+  </joint>
+  <link name="left_forearm [arm]">
+    <visual>
+      <origin xyz="-0.0055 0.025 -0.09" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.035 0.049 0.144"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.0055 0.025 -0.09" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.035 0.049 0.144"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_hand [hand]">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.005 0.02 0.005"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.005 0.02 0.005"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_forearm [arm]_left_hand [hand]_joint" type="fixed">
+    <parent link="left_forearm [arm]"/>
+    <child link="left_hand [hand]"/>
+    <origin xyz="-0.01 0.025 -0.16" rpy="0 0 0"/>
+  </joint>
+</robot>

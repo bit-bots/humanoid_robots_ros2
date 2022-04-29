@@ -1,0 +1,130 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+
+# For beginners, we downscale velocity and acceleration limits.
+# You can always specify higher scaling factors (<= 1.0) in your motion requests.  # Increase the values below to 1.0 to always move at maximum speed.
+default_velocity_scaling_factor: 0.1
+default_acceleration_scaling_factor: 0.1
+
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+joint_limits:
+  hingejoint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_0:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_1:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_10:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_12:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_14:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_16:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_2:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_4:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_5:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_6:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  hingejoint_8:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  leftAnklePitch:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  leftAnkleRoll:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  leftHipPitch:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  leftHipRoll[hip]:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  leftHipYaw:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  leftKneePitch:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  rightAnklePitch:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  rightAnkleRoll:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  rightHipPitch:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  rightHipRoll[hip]:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  rightHipYaw:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0
+  rightKneePitch:
+    has_velocity_limits: true
+    max_velocity: 5.76
+    has_acceleration_limits: false
+    max_acceleration: 0

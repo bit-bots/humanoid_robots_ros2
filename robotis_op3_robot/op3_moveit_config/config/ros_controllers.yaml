@@ -1,0 +1,39 @@
+# Simulation settings for using moveit_sim_controllers
+moveit_sim_hw_interface:
+  joint_model_group: todo_group_name
+  joint_model_group_pose: todo_state_name
+# Settings for ros_control_boilerplate control loop
+generic_hw_control_loop:
+  loop_hz: 300
+  cycle_time_error_threshold: 0.01
+# Settings for ros_control hardware interface
+hardware_interface:
+  joints:
+    - head_pan
+    - head_tilt
+    - l_hip_yaw
+    - l_hip_roll
+    - l_hip_pitch
+    - l_knee
+    - l_ank_pitch
+    - l_ank_roll
+    - l_sho_pitch
+    - l_sho_roll
+    - l_el
+    - r_hip_yaw
+    - r_hip_roll
+    - r_hip_pitch
+    - r_knee
+    - r_ank_pitch
+    - r_ank_roll
+    - r_sho_pitch
+    - r_sho_roll
+    - r_el
+  sim_control_mode: 1  # 0: position, 1: velocity
+# Publish all joint states
+# Creates the /joint_states topic necessary in ROS
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+controller_list:
+  []

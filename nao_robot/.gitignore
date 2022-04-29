@@ -1,0 +1,47 @@
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+build/
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+#Specific ignores for nao_robot
+naoqi_bridge_msgs/src
+msg_gen
+srv_gen
+# Actionlib:
+naoqi_bridge_msgs/msg/*Action.msg
+naoqi_bridge_msgs/msg/*Feedback.msg
+naoqi_bridge_msgs/msg/*Goal.msg
+naoqi_bridge_msgs/msg/*Result.msg
+

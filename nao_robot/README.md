@@ -1,0 +1,1 @@
+These packages build upon the original packages from https://github.com/ros-naoqi/nao_robot
